@@ -2,7 +2,17 @@ from fastapi import FastAPI,Query
 from pydantic import BaseModel
 from database import Session,engine,Base
 from model import PackageModel
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI()
+
+app.add_middleware(
+ CORSMiddleware,
+ allow_origins="*",
+ allow_credentials=True,
+ allow_methods=["*"], # You can restrict to specific HTTP methods
+ allow_headers=["*"], # You can restrict to specific HTTP headers
+)
 
 # Create the table
 Base.metadata.create_all(bind=engine)
